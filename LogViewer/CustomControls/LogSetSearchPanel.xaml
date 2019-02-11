@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="LogViewer.CustomControls.LogSetSearchPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="SearchText">
+            <Setter Property="Control.Height" Value="23" />
+            <Setter Property="Control.Margin" Value="5" />
+            <Setter Property="Control.Padding" Value="2" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+    </UserControl.Resources>
+    <Grid Width="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition  Width="Auto" />
+            <ColumnDefinition  Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Content="Start:" Grid.Row="0" />
+        <wpfTool:DateTimePicker Name="dtStart" Format="Custom" FormatString="MM/dd/yy H:mm:ss" Style="{StaticResource SearchText}" Grid.Row="0" Grid.Column="1" />
+        <Label Content="End:" Grid.Row="1" />
+        <wpfTool:DateTimePicker Name="dtEnd" Format="Custom" FormatString="MM/dd/yy H:mm:ss" Style="{StaticResource SearchText}" Grid.Row="1" Grid.Column="1" />
+        <Label Content="Thread Id:" Grid.Row="2" />
+        <TextBox Name="txtThreadId" Style="{StaticResource SearchText}" Grid.Row="2" Grid.Column="1" />
+        <Label Content="Process:" Grid.Row="3" />
+        <TextBox Name="txtProcess" Style="{StaticResource SearchText}" Grid.Row="3" Grid.Column="1" />
+        <Label Content="Area:" Grid.Row="4" />
+        <TextBox Name="txtArea" Style="{StaticResource SearchText}" Grid.Row="4" Grid.Column="1" />
+        <Label Content="Category:" Grid.Row="5" />
+        <TextBox Name="txtCategory" Style="{StaticResource SearchText}" Grid.Row="5" Grid.Column="1" />
+        <Label Content="EventID:" Grid.Row="6" />
+        <TextBox Name="txtEventID" Style="{StaticResource SearchText}" Grid.Row="6" Grid.Column="1" />
+        <Label Content="Level:" Grid.Row="7" />
+        <Grid Grid.Row="7" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="45" />
+            </Grid.ColumnDefinitions>
+            <ComboBox Name="cmbLevel" IsEditable="False" Style="{StaticResource SearchText}" Width="Auto" Grid.Column="0" Padding="8 2 2 2"  />
+            <ComboBox Name="cmbLevelOperator" IsEditable="False" Style="{StaticResource SearchText}" Grid.Column="1" HorizontalContentAlignment="Center" Margin="0 5 5 5" />
+        </Grid>
+        <Label Content="Message:" Grid.Row="8" />
+        <TextBox Name="txtMessage" TextWrapping="Wrap" Height="70" Margin="5" VerticalAlignment="Top" Grid.Row="8" Grid.Column="1" />
+        <Grid Grid.Row="9" Grid.ColumnSpan="2" Margin="5 0 5 5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" Grid.Row="0">
+                <Separator/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Name="btnReset" Click="btnReset_Click" Style="{StaticResource LinkButtonStyle}" Height="14" VerticalAlignment="Bottom" Margin="0 0 5 2">reset</Button>
+                    <Button Name="btnCancel" Content="Cancel" Style="{StaticResource OKButton}" Click="btnCancel_Click" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 5 5 0"   />
+                    <Button Name="btnSearch" Content="Search" Style="{StaticResource OKButton}" Click="btnSearch_Click" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 5 5 0"   />
+                </StackPanel>
+            </StackPanel>
+            <TextBlock Name="txtResults" HorizontalAlignment="Right"  VerticalAlignment="Bottom" FontStyle="Italic" Grid.Row="1"/>
+        </Grid>
+    </Grid>
+</UserControl>

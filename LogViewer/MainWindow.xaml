@@ -1,0 +1,91 @@
+﻿<Window xmlns:Controls="clr-namespace:LogViewer.CustomControls"  x:Class="LogViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:uc="clr-namespace:LogViewer.CustomControls"
+        Title="SharePoint Log Viewer" ResizeMode="CanResizeWithGrip" Height="640" Width="960" AllowDrop="True" Drop="Window_Drop" Icon="{DynamicResource layers_icon32}" Closing="MainWindow_Closing" >
+    <DockPanel>
+        <Menu IsMainMenu="True" Height="22" HorizontalAlignment="Stretch" Name="mainmenu"  DockPanel.Dock="Top" Width="Auto"  Style="{StaticResource bgrdColor1}" MouseEnter="mainmenu_MouseEnter"  >
+            <MenuItem Header="_File" Click="MenuItem_Click">
+                <MenuItem Header="Open new log set..." CommandParameter="New">
+                    <MenuItem.Icon>
+                        <Image Height="16" Source="{StaticResource bmpWrench16}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Create empty log set..." CommandParameter="NewEmpty" />
+                <Separator />
+                <MenuItem Name="menuSave" Header="_Save" CommandParameter="Save">
+                    <MenuItem.Icon>
+                        <Image Height="16" Source="{StaticResource bmpSave16}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Name="menuPrint" Header="_Print" CommandParameter="Print">
+                    <MenuItem.Icon>
+                        <Image Height="16" Source="{StaticResource bmpPrint16}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="E_xit" CommandParameter="Exit" />
+            </MenuItem>
+            <MenuItem Header="Options">
+                <MenuItem Name="optMonitoringSettings" Header="Configure log monitor directory..." Click="MenuItem_Click" CommandParameter="LogMonitorSettings" />
+                <Separator />
+                <MenuItem Name="optIncludeWinLog" Header="Include Windows Log Events" IsChecked="False" IsCheckable="True" />
+                <MenuItem Name="optErrorLog" Header="Create Error Log" IsChecked="True" IsCheckable="True" />
+            </MenuItem>
+        </Menu>
+        <ToolBarPanel Orientation="Horizontal" DockPanel.Dock="Top" Width="auto" Style="{StaticResource bgrdColor1}">
+            <ToolBarTray Margin="5 0 0 0"  >
+                <ToolBar Band="1" BandIndex="1" Loaded="ToolBar_Loaded" Margin="0 0 -13 0" Style="{StaticResource bgrdColor1}" >
+                    <Button Margin="3 0 0 0" BorderBrush="Transparent" ToolTip="Open new log set" Click="ToolbarButton_Click" CommandParameter="New" >
+                        <Image Height="16" Source="{StaticResource bmpWrench16}"/>
+                    </Button>
+                    <Button Name="btnSearch" Margin="3 0 0 0" BorderBrush="Transparent" ToolTip="Search log set"  Click="ToolbarButton_Click" CommandParameter="Search" >
+                        <Image Height="16" Source="{StaticResource bmpZoon16}"/>
+                    </Button>
+                    <Button Name="btnMetrics" Margin="3 0 0 0" BorderBrush="Transparent" ToolTip="Generate or refersh log metrics"  Click="ToolbarButton_Click" CommandParameter="Metrics">
+                        <Image Height="16" Source="{StaticResource bmpChart16}" />
+                    </Button>
+                    <Separator Margin="5 0 1 0" />
+                    <Button Name="btnMonitoring" Margin="3 0 0 0" BorderBrush="Transparent" ToolTip="Start log monitoring..."  Click="ToolbarButton_Click" CommandParameter="Monitor" >
+                        <Image Name="imgMonitoring" Height="16" Source="{StaticResource bmpPlay16}" />
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+        </ToolBarPanel>
+        <StatusBar Height="23" Width="auto" Padding="0" Margin="0" DockPanel.Dock="Bottom" Background="IndianRed" >
+            <StatusBarItem Margin="2 0 0 0">
+                <TextBlock Name="statusbarLeft" />
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right" Margin="0 0 20 0">
+                <StackPanel Orientation="Horizontal">
+                    <ContentControl Name="Alert" Margin="0" Padding="0" Height="Auto" />
+                    <Rectangle Name="statusSeperator" Width="1" Opacity=".3" Stroke="White" Visibility="Collapsed" Margin="15 0 15 0" />
+                    <TextBlock Name="statusbarRight" />
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+        <Grid Name="mainGrid" Visibility="Collapsed" Style="{StaticResource bgrdColor1}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Name="mainGridRow1" Width="*"/>
+                <ColumnDefinition Name="mainGridRow2" Width="0" />
+            </Grid.ColumnDefinitions>
+            <uc:LogSetTabControl x:Name="tcLogSets" VerticalAlignment="Top" Grid.Column="0" SelectionChanged="tcLogSets_SelectionChanged"/>
+            <GridSplitter Name="spltSearch" Width="1" Grid.Column="1"  HorizontalAlignment="Left" VerticalAlignment="Stretch" Style="{StaticResource bgrdColor1}" ShowsPreview="false"/>
+            <Grid Name="gridSearch" Height="Auto" MinWidth="250" Width="Auto" Grid.Column="1" Style="{StaticResource bgrdColor2}" Margin="1 23 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid  Height="27" Width="Auto" Grid.Row="0" Background="#626161">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Height="Auto" Foreground="White" VerticalAlignment="Center" Margin="5 0 0 0">Search</TextBlock>
+                        <TextBlock Name="txtSearchStatus" Height="Auto" Foreground="White" FontStyle="Italic" VerticalAlignment="Center" Margin="5 0 0 0" />
+                    </StackPanel>                 
+                </Grid>
+                <uc:LogSetSearchPanel x:Name="logsetSearch" Grid.Row="1" DoSearch="logsetSearch_DoSearch" ResetSearch="logsetSearch_DoSearch" 
+                                      Cancelled="logsetSearch_Cancelled" Margin="5 1 5 0" />
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>
